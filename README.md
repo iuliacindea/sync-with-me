@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SyncWithMe - Group Event & Social Calendar Planner
 
-## Getting Started
+SyncWithMe is a modern social planning web application designed to solve the common challenge of coordinating group schedules. It allows friends to overlap their availability, discover common free time slots, and organize events seamlessly without long messaging threads.
 
-First, run the development server:
+Live Demo: https://syncwithme.vercel.app
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+---
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Key Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+* Friend System: Add friends and create dedicated groups for different circles.
+* Overlapping Calendar: Automatically overlap friends' schedules to view instant availability.
+* Event Creator: Generate events directly from shared free time slots.
+* To-Do & Bring List: Shared checklist for event items, equipment, and responsibilities.
+* Expense Splitter: Automatic calculation and tracking of shared event expenses.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+* Framework: Next.js 15+ (App Router, Server Actions)
+* Language: TypeScript
+* Styling: Tailwind CSS
+* Deployment: Vercel
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Local Development Guide
 
-## Deploy on Vercel
+1. Clone the repository:
+   git clone https://github.com/iuliacindea/syncwithme.git
+   cd syncwithme
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2. Install dependencies:
+   npm install
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+3. Run the development server:
+   npm run dev
+
+4. Open http://localhost:3000 in your browser to view the application.
