@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { Show, SignInButton, SignUpButton, UserButton, SignOutButton, useAuth } from '@clerk/nextjs'
 
 export default function Home() {
   return (
@@ -17,12 +20,33 @@ export default function Home() {
             >
               Features
             </Link>
-            <Link
-              href="#"
-              className="text-sm bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg font-medium transition-all shadow-lg shadow-indigo-500/20"
-            >
-              Get Started
-            </Link>
+
+
+            <Show when="signed-out">
+              <SignInButton mode="modal">
+                <button className="text-sm text-slate-300 hover:text-white transition-colors cursor-pointer">
+                  Sign In
+                </button>
+              </SignInButton>
+              <SignUpButton mode="modal">
+                <button className="text-sm bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg font-medium transition-all shadow-lg shadow-indigo-500/20 cursor-pointer">
+                  Get Started
+                </button>
+              </SignUpButton>
+            </Show>
+
+
+            <Show when="signed-in">
+              <div className="flex items-center gap-3">
+                <Link
+                  href="/dashboard"
+                  className="text-sm bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg font-medium transition-all shadow-lg shadow-indigo-500/20"
+                >
+                  Go to Dashboard
+                </Link>
+                <UserButton />
+              </div>
+            </Show>
           </nav>
         </div>
       </header>
@@ -31,7 +55,7 @@ export default function Home() {
       <main className="flex-1">
         <section className="max-w-5xl mx-auto px-6 pt-24 pb-16 text-center">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-semibold uppercase tracking-wider mb-6">
-            ✨ Social Planning Redefined
+             Social Planning Redefined
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
             Find the best time to meet. <br className="hidden md:inline" />
@@ -47,7 +71,7 @@ export default function Home() {
               href="#"
               className="w-full sm:w-auto px-8 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-semibold transition-all shadow-xl shadow-indigo-600/25 flex items-center justify-center gap-2"
             >
-              Create First Event 
+              Create First Event
             </Link>
             <Link
               href="#features"
@@ -96,11 +120,6 @@ export default function Home() {
           </div>
         </section>
       </main>
-
-      {/* Footer */}
-      <footer className="border-t border-slate-800 bg-slate-950 py-8 text-center text-slate-500 text-sm">
-        <p>© 2026 SyncWithMe. Built for Next.js Internship Program.</p>
-      </footer>
     </div>
   );
 }
