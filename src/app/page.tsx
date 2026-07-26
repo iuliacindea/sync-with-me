@@ -34,7 +34,7 @@ export default function Home() {
             ✨ Social Planning Redefined
           </div>
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
-            Find common free time. <br className="hidden md:inline" />
+            Find the best time to meet. <br className="hidden md:inline" />
             <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
               Plan hangouts without the chaos.
             </span>
@@ -47,7 +47,7 @@ export default function Home() {
               href="#"
               className="w-full sm:w-auto px-8 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-semibold transition-all shadow-xl shadow-indigo-600/25 flex items-center justify-center gap-2"
             >
-              Create First Event 🚀
+              Create First Event 
             </Link>
             <Link
               href="#features"

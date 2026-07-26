@@ -9,7 +9,7 @@ Live Demo: https://syncwithme.vercel.app
 ## Key Features
 
 * Friend System: Add friends and create dedicated groups for different circles.
-* Overlapping Calendar: Automatically overlap friends' schedules to view instant availability.
+* Overlapping Calendar: Automatically overlap friends schedules to view instant availability.
 * Event Creator: Generate events directly from shared free time slots.
 * To-Do & Bring List: Shared checklist for event items, equipment, and responsibilities.
 * Expense Splitter: Automatic calculation and tracking of shared event expenses.
