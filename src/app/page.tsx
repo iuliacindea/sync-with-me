@@ -60,12 +60,9 @@ export default function Home() {
           <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight text-white mb-6 leading-tight">
             Find the best time to meet. <br className="hidden md:inline" />
             <span className="bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
-              Plan hangouts without the chaos.
+              Make hangouts simple.
             </span>
           </h1>
-          <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
-            Stop asking on group chats <i>"Who's free this weekend?"</i>. SyncWithMe overlaps your friends calendars and instantly shows you when everyone can meet up.
-          </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
               href="#"
@@ -87,21 +84,15 @@ export default function Home() {
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-12 text-slate-100">
             Everything you need for successful events
           </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="p-6 bg-slate-900/60 border border-slate-800 rounded-2xl">
-              <div className="w-12 h-12 bg-indigo-500/10 text-indigo-400 rounded-xl flex items-center justify-center text-2xl mb-4">
-                🗓️
-              </div>
-              <h3 className="text-lg font-semibold mb-2 text-white">Overlapping Calendar</h3>
-              <p className="text-slate-400 text-sm leading-relaxed">
+          <div className="grid md:grid-cols-3 gap-8 justify-center items-center">
+            <div className="p-6 bg-slate-900/60 border border-slate-800 rounded-2xl justify-center items-center">
+              <h3 className="text-lg font-semibold mb-2 text-white justify-center items-center">Overlapping Calendar</h3>
+              <p className="text-slate-400 text-sm leading-relaxed justify-center items-center">
                 Automatically view the exact dates and times all your group members are available.
               </p>
             </div>
 
             <div className="p-6 bg-slate-900/60 border border-slate-800 rounded-2xl">
-              <div className="w-12 h-12 bg-purple-500/10 text-purple-400 rounded-xl flex items-center justify-center text-2xl mb-4">
-                📋
-              </div>
               <h3 className="text-lg font-semibold mb-2 text-white">To-Do & Bring List</h3>
               <p className="text-slate-400 text-sm leading-relaxed">
                 Everyone can claim items to bring (games, snacks, speakers) without overlap.
@@ -109,9 +100,6 @@ export default function Home() {
             </div>
 
             <div className="p-6 bg-slate-900/60 border border-slate-800 rounded-2xl">
-              <div className="w-12 h-12 bg-pink-500/10 text-pink-400 rounded-xl flex items-center justify-center text-2xl mb-4">
-                💰
-              </div>
               <h3 className="text-lg font-semibold mb-2 text-white">Expense Splitter</h3>
               <p className="text-slate-400 text-sm leading-relaxed">
                 Track shared expenses and let the app automatically calculate who owes what.

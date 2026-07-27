@@ -28,19 +28,19 @@ export default async function DashboardPage() {
               href="/dashboard"
               className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-indigo-600/10 text-indigo-400 font-medium border border-indigo-500/20"
             >
-              <span>📊</span> Dashboard
+               Dashboard
             </Link>
             <Link
               href="#"
               className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all"
             >
-              <span>🗓️</span> My Calendars
+               My Calendars
             </Link>
             <Link
               href="/dashboard/friends"
               className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all"
             >
-              <span>👥</span> Friends
+               Friends
             </Link>
             <Link
               href="#"
