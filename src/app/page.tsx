@@ -14,12 +14,6 @@ export default function Home() {
             <span>SyncWithMe</span>
           </div>
           <nav className="flex items-center gap-4">
-            <Link
-              href="#features"
-              className="text-sm text-slate-400 hover:text-slate-200 transition-colors"
-            >
-              Features
-            </Link>
 
 
             <Show when="signed-out">
@@ -64,49 +58,38 @@ export default function Home() {
             </span>
           </h1>
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <Link
-              href="#"
-              className="w-full sm:w-auto px-8 py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-semibold transition-all shadow-xl shadow-indigo-600/25 flex items-center justify-center gap-2"
-            >
-              Create First Event
-            </Link>
-            <Link
-              href="#features"
-              className="w-full sm:w-auto px-8 py-3.5 bg-slate-800 hover:bg-slate-700 text-slate-200 rounded-xl font-semibold transition-all border border-slate-700 flex items-center justify-center"
-            >
-              Learn More
-            </Link>
           </div>
         </section>
 
-        {/* Features Grid */}
-        <section id="features" className="max-w-6xl mx-auto px-6 py-16 border-t border-slate-800/80">
-          <h2 className="text-2xl md:text-3xl font-bold text-center mb-12 text-slate-100">
-            Everything you need for successful events
-          </h2>
-          <div className="grid md:grid-cols-3 gap-8 justify-center items-center">
-            <div className="p-6 bg-slate-900/60 border border-slate-800 rounded-2xl justify-center items-center">
-              <h3 className="text-lg font-semibold mb-2 text-white justify-center items-center">Overlapping Calendar</h3>
-              <p className="text-slate-400 text-sm leading-relaxed justify-center items-center">
-                Automatically view the exact dates and times all your group members are available.
-              </p>
-            </div>
+       {/* Features Grid */}
+<section id="features" className="max-w-6xl mx-auto px-6 py-16 border-t border-slate-800/80">
+  <h2 className="text-2xl md:text-3xl font-bold text-center mb-12 text-slate-100">
+    Everything you need for successful events
+  </h2>
 
-            <div className="p-6 bg-slate-900/60 border border-slate-800 rounded-2xl">
-              <h3 className="text-lg font-semibold mb-2 text-white">To-Do & Bring List</h3>
-              <p className="text-slate-400 text-sm leading-relaxed">
-                Everyone can claim items to bring (games, snacks, speakers) without overlap.
-              </p>
-            </div>
 
-            <div className="p-6 bg-slate-900/60 border border-slate-800 rounded-2xl">
-              <h3 className="text-lg font-semibold mb-2 text-white">Expense Splitter</h3>
-              <p className="text-slate-400 text-sm leading-relaxed">
-                Track shared expenses and let the app automatically calculate who owes what.
-              </p>
-            </div>
-          </div>
-        </section>
+  <div className="flex flex-col md:flex-row justify-center items-stretch gap-8 max-w-4xl mx-auto">
+    
+    <div className="flex-1 p-6 bg-slate-900/60 border border-slate-800 rounded-2xl flex flex-col items-center text-center hover:border-slate-700 transition-all">
+      <h3 className="text-lg font-semibold mb-2 text-white">
+        Overlapping Calendar
+      </h3>
+      <p className="text-slate-400 text-sm leading-relaxed">
+        Automatically view the exact time all your group members are available.
+      </p>
+    </div>
+
+    <div className="flex-1 p-6 bg-slate-900/60 border border-slate-800 rounded-2xl flex flex-col items-center text-center hover:border-slate-700 transition-all">
+      <h3 className="text-lg font-semibold mb-2 text-white">
+        To-Do & Bring List
+      </h3>
+      <p className="text-slate-400 text-sm leading-relaxed">
+        Everyone in your group will know what they will need for this event.
+      </p>
+    </div>
+
+  </div>
+</section>
       </main>
     </div>
   );

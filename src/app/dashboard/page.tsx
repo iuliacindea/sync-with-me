@@ -1,14 +1,93 @@
-import { UserButton } from "@clerk/nextjs";
-import { getOrCreateDbUser } from "@/lib/user";
+"use client";
+
+import { useState, useEffect } from "react";
+import { useUser, UserButton } from "@clerk/nextjs";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import HeaderNotifications from "@/components/HeaderNotifications";
 
-export default async function DashboardPage() {
-  const dbUser = await getOrCreateDbUser();
+const DAYS_MAP: { [key: number]: string } = {
+  1: "Monday",
+  2: "Tuesday",
+  3: "Wednesday",
+  4: "Thursday",
+  5: "Friday",
+  6: "Saturday",
+  0: "Sunday",
+};
 
-  if (!dbUser) {
-    redirect("/");
+export default function DashboardPage() {
+  const { user, isLoaded } = useUser();
+  const [friends, setFriends] = useState<any[]>([]);
+  const [selectedFriendId, setSelectedFriendId] = useState<string>("");
+  const [commonSlots, setCommonSlots] = useState<any[] | null>(null);
+  const [isComparing, setIsComparing] = useState(false);
+  const [groups, setGroups] = useState<any[]>([]);
+
+  // Load friends and groups
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const [friendsRes, groupsRes] = await Promise.all([
+          fetch("/api/friends/list"),
+          fetch("/api/groups"),
+        ]);
+
+        if (friendsRes.ok) {
+          const friendsData = await friendsRes.json();
+          setFriends(friendsData.friends || []);
+          if (friendsData.friends && friendsData.friends.length > 0) {
+            setSelectedFriendId(friendsData.friends[0].id);
+          }
+        }
+
+        if (groupsRes.ok) {
+          const groupsData = await groupsRes.json();
+          setGroups(groupsData.groups || []);
+        }
+      } catch (err) {
+        console.error("Error loading dashboard data:", err);
+      }
+    }
+
+    if (isLoaded && user) {
+      fetchData();
+    }
+  }, [isLoaded, user]);
+
+  // Compare availability when a friend is selected
+  const handleCompare = async () => {
+    if (!selectedFriendId) return;
+    setIsComparing(true);
+
+    try {
+      const res = await fetch(`/api/availability/compare?friendId=${selectedFriendId}`);
+      if (res.ok) {
+        const data = await res.json();
+        setCommonSlots(data.commonSlots || []);
+      }
+    } catch (err) {
+      console.error("Error comparing schedules:", err);
+    } finally {
+      setIsComparing(false);
+    }
+  };
+
+  useEffect(() => {
+    if (selectedFriendId) {
+      handleCompare();
+    }
+  }, [selectedFriendId]);
+
+  if (!isLoaded) {
+    return (
+      <div className="min-h-screen bg-slate-950 text-slate-100 flex items-center justify-center">
+        <p className="text-slate-400 animate-pulse">Loading dashboard...</p>
+      </div>
+    );
   }
+
+  // Calculate total proposed events across user's groups
+  const totalEvents = groups.reduce((acc, g) => acc + (g.events?.length || 0), 0);
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col md:flex-row">
@@ -19,7 +98,7 @@ export default async function DashboardPage() {
             href="/"
             className="text-xl font-bold tracking-tight text-indigo-400 flex items-center gap-2.5 mb-8 hover:opacity-90 transition-opacity"
           >
-            <span className="text-2xl">📅</span>
+  <span className="text-2xl">📅</span>
             <span>SyncWithMe</span>
           </Link>
 
@@ -28,25 +107,25 @@ export default async function DashboardPage() {
               href="/dashboard"
               className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-indigo-600/10 text-indigo-400 font-medium border border-indigo-500/20"
             >
-               Dashboard
+              Dashboard
             </Link>
             <Link
-              href="#"
+              href="/dashboard/availability"
               className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all"
             >
-               My Calendars
+              Availability
+            </Link>
+            <Link
+              href="/dashboard/groups"
+              className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all"
+            >
+              Groups
             </Link>
             <Link
               href="/dashboard/friends"
               className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all"
             >
-               Friends
-            </Link>
-            <Link
-              href="#"
-              className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all"
-            >
-              <span>⚙️</span> Settings
+              Friends
             </Link>
           </nav>
         </div>
@@ -56,8 +135,8 @@ export default async function DashboardPage() {
           <div className="flex items-center gap-3">
             <UserButton />
             <div className="text-sm overflow-hidden">
-              <p className="font-medium text-white truncate">{dbUser.name || "User"}</p>
-              <p className="text-xs text-slate-400 truncate">{dbUser.email}</p>
+              <p className="font-medium text-white truncate">{user?.fullName || user?.firstName || "User"}</p>
+              <p className="text-xs text-slate-400 truncate">{user?.primaryEmailAddress?.emailAddress}</p>
             </div>
           </div>
         </div>
@@ -65,73 +144,37 @@ export default async function DashboardPage() {
 
       {/* Main Content Area */}
       <main className="flex-1 p-6 md:p-10 space-y-8">
-        {/* Top Header */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-          <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-white">
-              Welcome back, {dbUser.name?.split(" ")[0] || "Friend"}! 👋
-            </h1>
-            <p className="text-slate-400 text-sm mt-1">
-              Here's an overview of your schedule and availability.
-            </p>
-          </div>
+{/* Top Header */}
+<div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+  <div>
+    <h1 className="text-2xl md:text-3xl font-bold text-white">
+      Welcome back, {user?.fullName || user?.firstName || user?.primaryEmailAddress?.emailAddress}!
+    </h1>
+  </div>
 
-          <button className="bg-indigo-600 hover:bg-indigo-500 text-white px-5 py-2.5 rounded-xl font-medium shadow-lg shadow-indigo-500/20 transition-all flex items-center justify-center gap-2 cursor-pointer w-fit">
-            <span>+</span> Create Event
-          </button>
-        </div>
+  <div className="flex items-center gap-4">
+    <HeaderNotifications />
+  </div>
+</div>
 
         {/* Stats Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
           <div className="p-5 bg-slate-900/50 border border-slate-800 rounded-2xl">
-            <p className="text-xs text-slate-400 font-medium">Upcoming Events</p>
-            <p className="text-3xl font-bold text-white mt-2">0</p>
-            <p className="text-xs text-slate-500 mt-1">No plans scheduled for this week</p>
+            <p className="text-xs text-slate-400 font-medium">Proposed Group Events</p>
+            <p className="text-3xl font-bold text-white mt-2">{totalEvents}</p>
+            <p className="text-xs text-slate-500 mt-1">Across all active groups</p>
           </div>
 
           <div className="p-5 bg-slate-900/50 border border-slate-800 rounded-2xl">
-            <p className="text-xs text-slate-400 font-medium">Synced Calendars</p>
-            <p className="text-3xl font-bold text-indigo-400 mt-2">1</p>
-            <p className="text-xs text-slate-500 mt-1">Primary Google Calendar connected</p>
+            <p className="text-xs text-slate-400 font-medium">Synced Friends</p>
+            <p className="text-3xl font-bold text-indigo-400 mt-2">{friends.length}</p>
+            <p className="text-xs text-slate-500 mt-1">Active connections</p>
           </div>
 
           <div className="p-5 bg-slate-900/50 border border-slate-800 rounded-2xl">
-            <p className="text-xs text-slate-400 font-medium">Friends</p>
-            <p className="text-3xl font-bold text-white mt-2">1</p>
-            <p className="text-xs text-slate-500 mt-1">Connect with friends to sync time</p>
-          </div>
-        </div>
-
-        {/* Main Sections Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2 p-6 bg-slate-900/40 border border-slate-800 rounded-2xl space-y-4">
-            <h2 className="text-lg font-semibold text-white">Upcoming Hangouts</h2>
-            <div className="border border-dashed border-slate-800 rounded-xl p-8 text-center space-y-3">
-              <p className="text-slate-400 text-sm">You have no upcoming events right now.</p>
-              <Link
-                href="/dashboard/friends"
-                className="inline-block text-sm text-indigo-400 hover:text-indigo-300 font-medium cursor-pointer"
-              >
-                Find common free time with friends &rarr;
-              </Link>
-            </div>
-          </div>
-
-          <div className="p-6 bg-slate-900/40 border border-slate-800 rounded-2xl space-y-4">
-            <h2 className="text-lg font-semibold text-white">Quick Actions</h2>
-            <div className="space-y-2">
-              <button className="w-full text-left p-3 rounded-xl bg-slate-800/40 hover:bg-slate-800 border border-slate-700/50 text-sm text-slate-200 transition-all flex items-center justify-between cursor-pointer">
-                <span>🔗 Connect Calendar</span>
-                <span className="text-slate-500">&rarr;</span>
-              </button>
-              <Link
-                href="/dashboard/friends"
-                className="w-full text-left p-3 rounded-xl bg-slate-800/40 hover:bg-slate-800 border border-slate-700/50 text-sm text-slate-200 transition-all flex items-center justify-between cursor-pointer"
-              >
-                <span>👥 Invite Friends</span>
-                <span className="text-slate-500">&rarr;</span>
-              </Link>
-            </div>
+            <p className="text-xs text-slate-400 font-medium">Your Groups</p>
+            <p className="text-3xl font-bold text-emerald-400 mt-2">{groups.length}</p>
+            <p className="text-xs text-slate-500 mt-1">Active hangout spaces</p>
           </div>
         </div>
       </main>
