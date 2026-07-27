@@ -103,31 +103,31 @@ export default function FriendsPage() {
           </Link>
 
           <nav className="space-y-2">
-            <Link
-              href="/dashboard"
+  <Link
+    href="/dashboard"
+    className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all"
+  >
+    Dashboard
+  </Link>
+  <Link
+    href="/dashboard/availability"
+    className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all"
+  >
+    Availability
+  </Link>
+                          <Link
+              href="/dashboard/groups"
               className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all"
             >
-             Dashboard
+              Groups
             </Link>
-            <Link
-              href="#"
-              className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all"
-            >
-             My Calendars
-            </Link>
-            <Link
-              href="/dashboard/friends"
-              className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-indigo-600/10 text-indigo-400 font-medium border border-indigo-500/20"
-            >
-               Friends
-            </Link>
-            <Link
-              href="#"
-              className="flex items-center gap-3 px-4 py-2.5 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800/50 transition-all"
-            >
-              <span>⚙️</span> Settings
-            </Link>
-          </nav>
+  <Link
+    href="/dashboard/friends"
+    className="flex items-center gap-3 px-4 py-2.5 rounded-xl bg-indigo-600/10 text-indigo-400 font-medium border border-indigo-500/20"
+  >
+    Friends
+  </Link>
+</nav>
         </div>
 
         {/* User profile bottom */}
