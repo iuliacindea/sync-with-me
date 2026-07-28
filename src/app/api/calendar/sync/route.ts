@@ -113,34 +113,31 @@ export async function GET() {
     }
 
     // Step 3: Formatăm evenimentele pentru react-big-calendar
+    // Step 3: Formatăm evenimentele pentru react-big-calendar
     const busySlots = allGoogleEvents
       .filter((evt: any) => evt.start && (evt.start.dateTime || evt.start.date))
       .map((evt: any) => {
-        let start: Date;
-        let end: Date;
+        let start: string;
+        let end: string;
         const isAllDay = Boolean(evt.start.date);
 
-        if (evt.start.date) {
-          start = new Date(`${evt.start.date}T00:00:00`);
-          end = new Date(`${evt.start.date}T23:59:59`);
+        if (isAllDay) {
+          // Pentru evenimentele All Day, trimitem direct string-ul YYYY-MM-DD
+          // cu ore fixe pentru a preveni conversiile UTC automate ale Node.js
+          const dateOnly = evt.start.date; // Ex: "2026-07-29"
+          start = `${dateOnly}T00:00:00`;
+          end = `${dateOnly}T23:59:59`;
         } else {
-          start = new Date(evt.start.dateTime);
-          end = new Date(evt.end.dateTime);
-
-          if (end.getHours() === 0 && end.getMinutes() === 0 && end.getSeconds() === 0) {
-            end = new Date(end.getTime() - 1000);
-          }
+          start = new Date(evt.start.dateTime).toISOString();
+          end = new Date(evt.end.dateTime).toISOString();
         }
 
         return {
           id: evt.id,
           title: evt.summary || "Ocupat",
-          start: start.toISOString(),
-          end: end.toISOString(),
+          start,
+          end,
           allDay: isAllDay,
-          dayOfWeek: start.getDay(),
-          startTime: start.toTimeString().substring(0, 5),
-          endTime: end.toTimeString().substring(0, 5),
         };
       });
 
