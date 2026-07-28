@@ -2,7 +2,7 @@
 
 SyncWithMe is a modern social planning web application designed to solve the common challenge of coordinating group schedules. It allows friends to overlap their availability, discover common free time slots, and organize events seamlessly without long messaging threads.
 
-Live Demo: https://syncwithme.vercel.app
+Live Demo: https://sync-with-me.vercel.app
 
 ---
 
