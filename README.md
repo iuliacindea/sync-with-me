@@ -12,7 +12,6 @@ Live Demo: https://sync-with-me.vercel.app
 * Overlapping Calendar: Automatically overlap friends schedules to view instant availability.
 * Event Creator: Generate events directly from shared free time slots.
 * To-Do & Bring List: Shared checklist for event items, equipment, and responsibilities.
-* Expense Splitter: Automatic calculation and tracking of shared event expenses.
 
 ---
 
